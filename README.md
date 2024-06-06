@@ -27,6 +27,13 @@ arguments. Claiming a specific license is optional.
 ```python
 from Epycor.client import ERP
 our_ERP = ERP("https://erp.example.com", "E10Demo", "apikey", "EPIC06")
+our_ERP.Login('manager', 'secretpassword')
+```
+
+When you're done, it's important that you logout to let the Epicor server close the session!
+
+```python
+our_ERP.Logout()
 ```
 
 Any of the URL parts can also be identified using subscript notation, which is
