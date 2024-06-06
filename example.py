@@ -43,4 +43,7 @@ Right now it just displays the company information for the selected company.
     our_company = our_ERP.Ice.BO.CompanySvc.GetByID(company=company_ID).json()
     pprint(our_company)
 
+    our_users = our_ERP.Erp.Baq['zCRM-Users'].Data().json()
+    pprint(our_users)
+
     our_ERP.Logout()

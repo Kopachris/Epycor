@@ -26,6 +26,15 @@ e.g.,
     new_row['JobHead_StartDate'] = '07/01/2024'
     resp = our_ERP.Erp.Baq.CustomScheduler.Data(ds=new_row)
 
+In cases where one of the segments of the API call contains a special character that can't
+be used in an object name in Python, such as a BAQ with a hyphen in its name, you can
+instead use subscript notation, e.g.,
+
+    our_users = our_ERP.Erp.Baq['zCRM-Users'].Data().json()
+
+You can actually use the subscript notation wherever you like, but I had to add it for
+those pesky BAQs with hyphens in their names.
+
 BSD 3-Clause License
 
 Copyright (c) 2024, Christopher Koch
@@ -168,6 +177,8 @@ class ERP(object):
     def __getattr__(self, name):
         return EpiSchema(self, name)
 
+    __getitem__ = __getattr__
+
 
 class EpiSchema(object):
     def __init__(self, instance: ERP, schema: str):
@@ -195,6 +206,8 @@ class EpiSchema(object):
 
     def __str__(self):
         return self.schema
+
+    __getitem__ = __getattr__
 
 
 class EpiNamespace(object):
@@ -224,6 +237,8 @@ class EpiNamespace(object):
 
     def __str__(self):
         return f"{self.schema}.{self.namespace}"
+
+    __getitem__ = __getattr__
 
 
 class EpiService(object):
@@ -266,6 +281,8 @@ class EpiService(object):
 
     def __str__(self):
         return f"{self.namespace}.{self.svc}"
+
+    __getitem__ = __getattr__
 
 
 def EpiMethod(instance: ERP, service: EpiService, method: str):
